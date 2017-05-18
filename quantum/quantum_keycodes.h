@@ -159,6 +159,7 @@ enum quantum_keycodes {
 #define MEH(kc)  (kc | QK_LCTL | QK_LSFT | QK_LALT)
 #define LCAG(kc) (kc | QK_LCTL | QK_LALT | QK_LGUI)
 #define ALTG(kc) (kc | QK_RCTL | QK_RALT)
+#define CALT(kc) (kc | QK_LCTL | QK_LALT)
 #define SCMD(kc) (kc | QK_LGUI | QK_LSFT)
 #define SWIN(kc) SCMD(kc)
 
@@ -289,6 +290,7 @@ enum quantum_keycodes {
 
 // M-od, T-ap - 256 keycode max
 #define MT(mod, kc) (kc | QK_MOD_TAP | ((mod & 0xF) << 8))
+#define C_A_T(kc) MT((MOD_LCTL | MOD_LALT), kc)
 #define CTL_T(kc) MT(MOD_LCTL, kc)
 #define SFT_T(kc) MT(MOD_LSFT, kc)
 #define ALT_T(kc) MT(MOD_LALT, kc)

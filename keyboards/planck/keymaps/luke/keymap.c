@@ -1,18 +1,18 @@
 /*
  * A keyboard layout for the gridded planck.
- * 
+ *
  * Copyright (C) 2017 Luke Silva
- * 
+ *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
  * as published by the Free Software Foundation; either version 2
  * of the License, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
@@ -31,7 +31,7 @@
  * through either double purpose modifiers or colemak style rolling for commonly used symbol clusters
  * Eg: compare colemak 'this' to '(){\n}' on the symbol layer.
  *
- * The layout also supports a range of multilingual characters, covering those 
+ * The layout also supports a range of multilingual characters, covering those
  * needed for French, German, Swedish and likely some other European Languages.
  * In the future full support for Colemak's multilingual deadkeys may be introduced.
  *
@@ -57,15 +57,16 @@
 #define _ADJ 6
 #define _NAV 7
 #define _PLOVER 8
+#define _MINECRAFT 9
 
 // Macro ID numbers
 #define M_ALT_HASH 1
 #define M_GR_DASH  2
-#define M_SYM_LPRN 3 
-#define M_NAV_UNDS 4 
-#define M_NUM_RPRN 5 
-#define M_CTRL_DLR 6 
-#define M_LCBR_ENT 7
+#define M_SYM_RPRN 3
+#define M_NAV_UNDS 4
+#define M_NUM_LPRN 5
+#define M_CTRL_DLR 6
+#define M_NEWBLK   7
 #define M_PLOVER   8
 #define M_EXT_PLV  9
 #define M_WINDOWS 10
@@ -76,13 +77,13 @@
 #define M_CATCH    15
 
 // Macro keys
-#define ALT_HASH MACROTAP(M_ALT_HASH)   // tap for #, hold for Alt 
+#define ALT_HASH MACROTAP(M_ALT_HASH)   // tap for #, hold for Alt
 #define GR_DASH  MACROTAP(M_GR_DASH)    // tap for -, hold for GR layer            a-class-name
-#define SYM_LPRN MACROTAP(M_SYM_LPRN)   // tap for (, hold for symbols layer       if()
+#define SYM_RPRN MACROTAP(M_SYM_RPRN)   // tap for ), hold for symbols layer       if()
 #define NAV_UNDS MACROTAP(M_NAV_UNDS)   // tap for _, hold for navigation layer    snake_case_variable
-#define NUM_RPRN MACROTAP(M_NUM_RPRN)   // tap for ), hold for numbers layer       else if()
+#define NUM_LPRN MACROTAP(M_NUM_LPRN)   // tap for (, hold for numbers layer       else if()
 #define CTRL_DLR MACROTAP(M_CTRL_DLR)   // tap for $, hold for ctrl                $php_is_really_weird
-#define LCBR_ENT M(M_LCBR_ENT)          // {\n                                     easier code formatting
+#define NEWBLK   M(M_NEWBLK)          // {\n                                     easier code formatting
 #define PLOVER   M(M_PLOVER)            // PHROPB (plover) or ERFVIK(qwerty)       starts plover
 #define EXT_PLV  M(M_EXT_PLV)           // PHRO*F (plover) or ERFVYU(qwerty)       stops plover
 #define WINDOWS  M(M_WINDOWS)           // Sets Unicode handler to windows
@@ -111,7 +112,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |------+------+------+------+------+------+------+------+------+------+------+------`---.
  * |Shift=|   Z  |   X  |   C  |   V  |   B  |   K  |   M  |  ,<  |  .>  |  /?  |Shift/Ent |
  * |------+------+------+------+------+------+------+------+------+------+------+----------|
- * |CtCaps|GUIF4 | Alt# | Gr-  | Sym( | Nav_ |Space | Num) |Ctrl$ | F11  | F12  |Nav toggle|
+ * |Ctrl  | GUI  | Alt# | Gr-  | Num( | Nav_ |Space | Sym) |Ctrl$ |      |      |          |
  * `---------------------------------------------------------------------------------------'
  */
 
@@ -119,11 +120,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   {KC_TAB,         KC_Q,    KC_W,    KC_F,    KC_P,    KC_G,    KC_J,    KC_L,    KC_U,    KC_Y,    KC_SCLN, KC_BSPC},
   {KC_BSPC,        KC_A,    KC_R,    KC_S,    KC_T,    KC_D,    KC_H,    KC_N,    KC_E,    KC_I,    KC_O,    KC_QUOT},
   {SFT_T(KC_EQL),  KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,    KC_K,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH, SFT_T(KC_ENT) },
-  {CTL_T(KC_CAPS), KC_LGUI,  ALT_HASH, GR_DASH, SYM_LPRN, NAV_UNDS,  KC_SPC, NUM_RPRN, CTRL_DLR, KC_F11, KC_F12, TG(_NAV)}
+  {KC_LCTL,        KC_LGUI, KC_LALT, GR_DASH, NUM_LPRN, NAV_UNDS,  KC_SPC, SYM_RPRN, CTRL_DLR, XXXXXXX, XXXXXXX, KC_F12}
 },
 
 
- 
+
 /* QWERTY
  * ,-----------------------------------------------------------------------------------.
  * | Tab  |   Q  |   W  |   E  |   R  |   T  |   Y  |   U  |   I  |   O  |   P  | Bksp |
@@ -132,15 +133,15 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |------+------+------+------+------+------+------+------+------+------+------+------`---.
  * |Shift=|   Z  |   X  |   C  |   V  |   B  |   N  |   M  |  ,<  |  .>  |  /?  |Shift/Ent |
  * |------+------+------+------+------+------+------+------+------+------+------+----------|
- * |CtCaps|GUIF4 | Alt# | Gr-  | Sym( | Nav_ |Space | Num) |Ctrl$ | F11  | F12  |Nav toggle|
+ * |Ctrl  | GUI  | Alt# | Gr-  | Num( | Nav_ |Space | Sym) |Ctrl$ | F11  | F12  |Nav toggle|
  * `---------------------------------------------------------------------------------------'
  */
 
 [_QWERTY] = {
   {KC_TAB,   KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,    KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    KC_BSPC},
   {KC_ESC,   KC_A,    KC_S,    KC_D,    KC_F,    KC_G,    KC_H,    KC_J,    KC_K,    KC_L,    KC_SCLN, KC_QUOT},
-  {KC_LSFT,  KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,    KC_K,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH, SFT_T(KC_ENT) },
-  {CTL_T(KC_CAPS),    KC_LGUI, KC_LALT, GR_DASH, SYM_LPRN,KC_SPC,  KC_SPC, NUM_RPRN, KC_LEFT, KC_DOWN, KC_UP, KC_RIGHT}
+  {KC_LSFT,  KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,    KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH, SFT_T(KC_ENT) },
+  {KC_LCTL,  KC_LGUI, KC_LALT, GR_DASH, NUM_LPRN,KC_SPC,  KC_SPC, SYM_RPRN, KC_LEFT, KC_DOWN, KC_UP, KC_RIGHT}
 },
 
 
@@ -148,38 +149,38 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * ,-----------------------------------------------------------------------------------.
  * | Tab  |  `   |  @   |  /   |  *   |  ^   |  %   |  :   |  +   |  -   | Del  | Bksp |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
- * |      |  [   |  ;   |  }   |  (   |  "   |  '   |  )   | {\n  |  !   |  ]   |  \   |
+ * |      |  [   |  ;   |  {   |  (   |  "   |  '   |  )   |  }   |  !   |  ]   |  \   |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
- * |Shift |  .   |  {   |  <   |  >   |  ~   |  X2  |  =   |  &   |  |   |  ?   |Enter |
+ * |Shift |  .   |{\n\n}|  <   |  >   |  ~   |  #   |  =   |  &   |  |   |  ?   |Enter |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
- * |      |      |      |      | Sym  |  _   |Space | NUM  |  X2  |      |      |      |
+ * |      |      |      |      | Num  |  _   |Space | Sym  |      |      |      |      |
  * `-----------------------------------------------------------------------------------'
  */
- 
+
 [_SYM] = {
   {KC_TAB,  KC_GRV,  KC_AT,   KC_SLSH, KC_ASTR, KC_CIRC, KC_PERC, KC_COLN, KC_PLUS, KC_MINS, KC_DEL,  KC_BSPC},
-  {FUNCTION,KC_LBRC, KC_SCLN, KC_RCBR, KC_LPRN, KC_DQT,  KC_QUOT, KC_RPRN, LCBR_ENT,KC_EXLM, KC_RBRC, KC_BSLS},
-  {KC_LSFT, KC_DOT,  KC_LCBR, KC_LABK, KC_RABK, KC_TILD, _______, KC_EQL,  KC_AMPR, KC_PIPE, KC_QUES, KC_ENT },
-  {THEN,    CATCH,   XXXXXXX, XXXXXXX, _______, _______, _______, _______, _______, XXXXXXX, XXXXXXX, _______}
+  {_______, KC_LBRC, KC_SCLN, KC_LCBR, KC_LPRN, KC_DQT,  KC_QUOT, KC_RPRN, KC_RCBR,KC_EXLM, KC_RBRC, KC_BSLS},
+  {_______, KC_DOT,  NEWBLK, KC_LABK, KC_RABK, KC_TILD, KC_HASH, KC_EQL,  KC_AMPR, KC_PIPE, KC_QUES, _______ },
+  {_______,_______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______}
 },
 
 
 /* Numbers
  * ,-----------------------------------------------------------------------------------.
- * | Tab  |  1   |  2   |  3   |  4   |  5   |  6   |  7   |  8   |  9   |  0   | Bksp |
+ * | Tab  |      |      |  =   |  _   |  ^   |  &   |  7   |  8   |  9   |  0   | Bksp |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
  * | Bksp |  x   |  D   |  E   |  F   |  +   |  -   |  4   |  5   |  6   |  0   |Enter |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
  * |Shift |  (   |  A   |  B   |  C   |  *   |  /   |  1   |  2   |  3   |  )   |Enter |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
- * |      |      |      |  GR  | SYM  |  _   |Space | NUM  |  0   |  .   |  f   |      |
+ * |      |      |      |  GR  | NUM  |  _   |Space | SYM  |  0   |  .   |  f   |      |
  * `-----------------------------------------------------------------------------------'
  */
- 
+
 [_NUM] = {
   {KC_TAB,  KC_1,    KC_2,    KC_3,    KC_4,    KC_5,    KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    KC_BSPC},
-  {KC_BSPC, KC_X,    S(KC_D), S(KC_E), S(KC_F), KC_PLUS, KC_MINS, KC_4,    KC_5,    KC_6,    KC_0,    KC_ENT },
-  {KC_LSFT, KC_LPRN, S(KC_A), S(KC_B), S(KC_C), KC_ASTR, KC_SLSH, KC_1,    KC_2,    KC_3,    KC_RPRN, KC_ENT },
+  {_______, KC_X,    S(KC_D), S(KC_E), S(KC_F), KC_PLUS, KC_MINS, KC_4,    KC_5,    KC_6,    KC_0,    KC_ENT },
+  {_______, KC_LPRN, S(KC_A), S(KC_B), S(KC_C), KC_ASTR, KC_SLSH, KC_1,    KC_2,    KC_3,    KC_RPRN, _______},
   {_______, _______, _______, _______, _______, _______, _______, _______, KC_0,    KC_DOT,  KC_F,    _______}
 },
 
@@ -195,7 +196,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |      |      |      |      |      |      |      |      |      |      |      |      |
  * `-----------------------------------------------------------------------------------'
  */
- 
+
 [_GR] = {
   {_______,  UC(0xE4),UC(0xE5), _______,UC(0xA2), UC(0x20AC),_______,UC(0xEB),UC(0xEA),UC(0xFC),UC(0xF9), _______},
   {_______,  UC(0xE2),UC(0xE0),UC(0xDF), _______, _______,   _______,UC(0xE8),UC(0xE9),UC(0xEF),UC(0xF6), _______},
@@ -223,52 +224,53 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |      |      |      |      |      |      |      |      |      |      |      |      |
  * `-----------------------------------------------------------------------------------'
  */
- 
+
 [_ADJ] = {
   {KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_F6,   KC_F7,   KC_F8,   KC_F9,   KC_F10,  KC_F11,  KC_F12 },
-  {XXXXXXX, XXXXXXX, KC_PSCR, KC_ESC,  KC_VOLU, KC_MPLY, KC_MPRV, QWERTY,  COLEMAK, PLOVER,  XXXXXXX, XXXXXXX},
-  {XXXXXXX, XXXXXXX, BL_STEP, KC_INS,  KC_VOLD, KC_MUTE, KC_MNXT, WINDOWS, LINUX,   OSX,     XXXXXXX, XXXXXXX},
+  {XXXXXXX, XXXXXXX, KC_PSCR, KC_ESC,  KC_VOLU, KC_MPLY, KC_MPRV, QWERTY,  COLEMAK, PLOVER, TG(_NAV), XXXXXXX},
+  {_______, XXXXXXX, BL_STEP, KC_INS,  KC_VOLD, KC_MUTE, KC_MNXT, WINDOWS, LINUX,   OSX,     DF(_MINECRAFT), _______},
   {_______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______}
 },
 
 
 /* Navigation
  * ,-----------------------------------------------------------------------------------.
- * |      |      | BTN3 | BTN2 | BTN1 |      | ACL0 | HOME | PGDN | PGUP | END  | Bksp |
+ * |      |WHLEFT|WHRGHT| BTN2 | BTN1 | WHUP | ACL0 | HOME | PGDN | PGUP | END  | Bksp |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
- * |      |MSLEFT| MSDN | MSUP |MSRGHT|      | ACL1 | LEFT | DOWN | UP   | RGHT |Enter |
+ * |      |MSLEFT| MSDN | MSUP |MSRGHT| WHDN | ACL1 | LEFT | DOWN | UP   | RGHT |Enter |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
- * |      |WHLEFT| WHDN | WHUP |WHRGHT|      | ACL2 |C-LEFT|C-PGDN|C-PGUP|C-RGHT|Enter |
+ * |      |WSLEFT| WSDN | WSUP |WSRGHT|      | ACL2 |C-LEFT|C-PGDN|C-PGUP|C-RGHT|Enter |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
  * |      |      |      |      |      |  _   |Space | ACL0 | ACL1 | ACL2 |      |TGLNAV|
  * `-----------------------------------------------------------------------------------'
  */
- 
+
 [_NAV] = {
-  {XXXXXXX, XXXXXXX, KC_BTN3, KC_BTN2, KC_BTN1, XXXXXXX, KC_ACL0, KC_HOME, KC_PGDN, KC_PGUP, KC_END,  KC_BSPC},
-  {XXXXXXX, KC_MS_L, KC_MS_D, KC_MS_U, KC_MS_R, XXXXXXX, KC_ACL1, KC_LEFT, KC_DOWN, KC_UP,   KC_RIGHT,KC_ENT },
-  {XXXXXXX, KC_WH_L, KC_WH_D, KC_WH_U, KC_WH_R, XXXXXXX, KC_ACL2, LCTL(KC_LEFT), LCTL(KC_PGDN), LCTL(KC_PGUP), LCTL(KC_RIGHT), KC_ENT },
-  {_______, _______, _______, _______, _______, _______, _______, KC_ACL0, KC_ACL1, KC_ACL2, _______, _______}
+  {XXXXXXX, KC_WH_L, KC_WH_R, KC_BTN2, KC_BTN1, KC_WH_U, KC_ACL0, KC_HOME, KC_PGDN, KC_PGUP, KC_END,  KC_BSPC},
+  {XXXXXXX, KC_MS_L, KC_MS_D, KC_MS_U, KC_MS_R, KC_WH_D, KC_ACL1, KC_LEFT, KC_DOWN, KC_UP,   KC_RIGHT,KC_ENT },
+  {_______, CALT(KC_LEFT), CALT(KC_DOWN), CALT(KC_UP), CALT(KC_RIGHT), XXXXXXX, KC_ACL2, LCTL(KC_LEFT), LCTL(KC_PGDN), LCTL(KC_PGUP), LCTL(KC_RIGHT), _______ },
+  {_______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______}
 },
 
 /* Plover Layer
  * ,-----------------------------------------------------------------------------------.
- * |      |   S  |   T  |   P  |   H  |   *  |   *  |   F  |   P  |   L  |   T  |   D  |
- * |------+------+------+------+------+------+------+------+------+------+------+------|
- * |TogOut|   S  |   K  |   W  |   R  |   *  |   *  |   R  |   B  |   G  |   S  |   Z  |
- * |------+------+------+------+------+------+------+------+------+------+------+------|
  * |   #  |   #  |   #  |   #  |   #  |   #  |   #  |   #  |   #  |   #  |   #  |   #  |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
- * | Exit |      |      |   #  |   A  |   O  |   E  |   U  |      |      |      |      |
+ * | Bksp |   S  |   T  |   P  |   H  |   *  |   *  |   F  |   P  |   L  |   T  |   D  |
+ * |------+------+------+------+------+------+------+------+------+------+------+------|
+ * |      |   S  |   K  |   W  |   R  |   *  |   *  |   R  |   B  |   G  |   S  |   Z  |
+ * |------+------+------+------+------+------+------+------+------+------+------+------|
+ * | Exit |      |      |      |   A  |   O  |   E  |   U  |      |      |      |      |
  * `-----------------------------------------------------------------------------------'
  */
 
 [_PLOVER] = {
-  {XXXXXXX, KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,    KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    KC_LBRC},
-  {XXXXXXX, KC_A,    KC_S,    KC_D,    KC_F,    KC_G,    KC_H,    KC_J,    KC_K,    KC_L,    KC_SCLN, KC_QUOT},
   {KC_1,    KC_1,    KC_1,    KC_1,    KC_1,    KC_1,    KC_1,    KC_1,    KC_1,    KC_1,    KC_1,    KC_1   },
-  {EXT_PLV, XXXXXXX, XXXXXXX, KC_1,    KC_C,    KC_V,    KC_N,    KC_M,    XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX}
-}
+  {KC_BSPC, KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,    KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    KC_LBRC},
+  {XXXXXXX, KC_A,    KC_S,    KC_D,    KC_F,    KC_G,    KC_H,    KC_J,    KC_K,    KC_L,    KC_SCLN, KC_QUOT},
+  {EXT_PLV, XXXXXXX, XXXXXXX, XXXXXXX, KC_C,    KC_V,    KC_N,    KC_M,    XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX}
+},
+
 
 
 };
@@ -289,41 +291,41 @@ const macro_t *action_get_macro(keyrecord_t *record, uint8_t id, uint8_t opt)
       return MACRO_TAP_SHFT_KEY_HOLD_MOD(record, 3, LALT);
     case M_GR_DASH:
       {
-        const macro_t* macro = MACRO_TAP_HOLD_LAYER(record, MACRO(T(MINS)), _GR);
-        update_tri_layer(_NUM, _GR, _ADJ);
-        return macro;
+	const macro_t* macro = MACRO_TAP_HOLD_LAYER(record, MACRO(T(MINS)), _GR);
+	update_tri_layer(_NUM, _GR, _ADJ);
+	return macro;
       }
-    case M_SYM_LPRN:
-      return MACRO_TAP_SHFT_KEY_HOLD_LAYER(record, 9, _SYM);
+    case M_SYM_RPRN:
+      return MACRO_TAP_SHFT_KEY_HOLD_LAYER(record, 0, _SYM);
     case M_NAV_UNDS:
       return MACRO_TAP_SHFT_KEY_HOLD_LAYER(record, MINS, _NAV);
-    case M_NUM_RPRN:
+    case M_NUM_LPRN:
       {
-        const macro_t* macro = MACRO_TAP_SHFT_KEY_HOLD_LAYER(record, 0, _NUM);
-        update_tri_layer(_NUM, _GR, _ADJ);
-        return macro;
+	const macro_t* macro = MACRO_TAP_SHFT_KEY_HOLD_LAYER(record, 9, _NUM);
+	update_tri_layer(_NUM, _GR, _ADJ);
+	return macro;
       }
     case M_CTRL_DLR:
       return MACRO_TAP_SHFT_KEY_HOLD_MOD(record, 4, LCTL);
-    case M_LCBR_ENT:
-      return MACRODOWN(I(10), D(LSFT), T(LBRC), U(LSFT), T(ENT), END);
+    case M_NEWBLK:
+      return MACRODOWN(I(10), D(LSFT), T(LBRC), U(LSFT), T(ENT), T(ENT), D(LSFT), T(RBRC), U(LSFT), T(TAB), T(UP), T(TAB), END);
     case M_PLOVER:
       if (record->event.pressed) {
-        layer_and(0);
-        layer_on(_PLOVER);
-        default_layer_set(_PLOVER);
-        
-        // Starts plover
-        return MACRO(I(10), D(E), D(R), D(F), D(V), D(I), D(K), U(E), U(R), U(F), U(V), U(I), U(K), END);
+	layer_and(0);
+	layer_on(_PLOVER);
+	default_layer_set(_PLOVER);
+
+	// Starts plover
+	return MACRO(I(10), D(E), D(R), D(F), D(V), D(I), D(K), U(E), U(R), U(F), U(V), U(I), U(K), END);
       }
-      break;    
+      break;
     case M_EXT_PLV:
       if (!record->event.pressed) {
-        layer_off(_PLOVER);
-        default_layer_set(_COLEMAK);
-        
-        //Pauses plover
-        return MACRO(I(10), D(E), D(R), D(F), D(V), D(Y), D(U), U(E), U(R), U(F), U(V), U(Y), U(U), END);
+	layer_off(_PLOVER);
+	default_layer_set(_COLEMAK);
+
+	//Pauses plover
+	return MACRO(I(10), D(E), D(R), D(F), D(V), D(Y), D(U), U(E), U(R), U(F), U(V), U(Y), U(U), END);
       }
       break;
     case M_WINDOWS:
@@ -337,17 +339,17 @@ const macro_t *action_get_macro(keyrecord_t *record, uint8_t id, uint8_t opt)
       break;
     case M_FUNCTION:
       if (record->event.pressed) {
-        SEND_STRING("function");
+	SEND_STRING("function");
       }
       break;
     case M_THEN:
       if (record->event.pressed) {
-        SEND_STRING("then");
+	SEND_STRING("then");
       }
       break;
     case M_CATCH:
       if (record->event.pressed) {
-        SEND_STRING("catch");
+	SEND_STRING("catch");
       }
       break;
   }
